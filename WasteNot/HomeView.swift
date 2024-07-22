@@ -28,98 +28,10 @@ struct HomeView: View {
             ZStack {
                 Color("background").ignoresSafeArea()
                 VStack {
-                    HStack(spacing: 0) {
-                        ForEach(tabs, id: \.self) { tab in
-                            Button {
-                                currentTab = tab
-                            } label: {
-                                Text(tab)
-                                    .bold()
-                                    .foregroundColor(currentTab == tab ? .primary : .secondary)
-                            }
-                            
-                            if tab != tabs.last {
-                                Spacer(minLength: 0)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 50)
+                    expiryTabBar
                     
                     ScrollView {
-                        ForEach(filtered) { item in
-                            ZStack {
-                                // Background (delete button)
-                                Color.red.opacity(0.9)
-                                    .cornerRadius(20)
-//                                    .frame(minHeight: 115)
-                                
-                                // Background (edit button)
-                                Color.orange.opacity(0.9)
-                                    .cornerRadius(20)
-                                    .padding(.trailing, 65)
-//                                    .frame(minHeight: 115)
-                                
-                                HStack {
-                                    Spacer()
-                                    
-                                    Button {
-                                        selectedItem = item
-                                        showingAddEdit = true
-                                        
-                                    } label: {
-                                        VStack {
-                                            Image(systemName: "pencil")
-                                                .bold()
-                                                .foregroundColor(.white)
-                                                .frame(width: 65)
-                                            Text("Edit")
-                                                .bold()
-                                                .foregroundColor(.white)
-                                        }
-                                    }
-                                    
-                                    Button {
-                                        withAnimation {
-                                            // Delete logics here
-                                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                                modelContext.delete(items[index])
-                                            }
-                                        }
-                                    } label: {
-                                        VStack {
-                                            Image(systemName: "trash.fill")
-                                                .bold()
-                                                .foregroundColor(.white)
-                                                .frame(width: 65)
-                                            Text("Delete")
-                                                .bold()
-                                                .foregroundColor(.white)
-                                        }
-                                    }
-                                }
-                                
-                                ItemRowView(item: item)
-                                    .offset(x: item.offset)
-                                    .gesture(DragGesture().updating($isDragging, body: { (value, state, _) in
-                                        state = true
-                                        onChanged(value: value, item: item)
-                                    }).onEnded({ (value) in
-                                        onEnd(value: value, item: item)
-                                    }))
-                                
-                            }
-                            .listRowSeparator(.hidden)
-                            .padding(.horizontal)
-                            .padding(.top, item == filtered.first ? 10 : 0)
-                            .onDisappear {
-                                withAnimation {
-                                    if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                        items[index].offset = 0
-                                    }
-                                }
-                            }
-                        }
-                        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Look for your item")
+                        itemsList
                     }
                     
                     Spacer()
@@ -153,10 +65,10 @@ struct HomeView: View {
                     
                 }
                 .navigationDestination(isPresented: $showingSetting, destination: {
-                    SettingView()
+                    SettingView(notificationManager: NotificationsManager(modelContext: modelContext))
                 })
                 .navigationDestination(isPresented: $showingAddEdit, destination: {
-                    AddEditView(selectedItem: $selectedItem)
+                    AddEditView(selectedItem: $selectedItem, notificationManager: NotificationsManager(modelContext: modelContext))
                 })
             }
         }
@@ -181,6 +93,103 @@ struct HomeView: View {
     }
 }
 
+extension HomeView {
+    private var expiryTabBar: some View {
+        HStack(spacing: 0) {
+            ForEach(tabs, id: \.self) { tab in
+                Button {
+                    currentTab = tab
+                } label: {
+                    Text(tab)
+                        .bold()
+                        .foregroundColor(currentTab == tab ? .primary : .secondary)
+                }
+                
+                if tab != tabs.last {
+                    Spacer(minLength: 0)
+                }
+            }
+        }
+        .padding(.horizontal, 50)
+    }
+    
+    private var itemsList: some View {
+        ForEach(filtered) { item in
+            ZStack {
+                // Background (delete button)
+                Color.red.opacity(0.9)
+                    .cornerRadius(20)
+//                                    .frame(minHeight: 115)
+                
+                // Background (edit button)
+                Color.orange.opacity(0.9)
+                    .cornerRadius(20)
+                    .padding(.trailing, 65)
+//                                    .frame(minHeight: 115)
+                
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        selectedItem = item
+                        showingAddEdit = true
+                        
+                    } label: {
+                        VStack {
+                            Image(systemName: "pencil")
+                                .bold()
+                                .foregroundColor(.white)
+                                .frame(width: 65)
+                            Text("Edit")
+                                .bold()
+                                .foregroundColor(.white)
+                        }
+                    }
+                    
+                    Button {
+                        withAnimation {
+                            // Delete logics here
+                            if let index = items.firstIndex(where: { $0.id == item.id }) {
+                                modelContext.delete(items[index])
+                            }
+                        }
+                    } label: {
+                        VStack {
+                            Image(systemName: "trash.fill")
+                                .bold()
+                                .foregroundColor(.white)
+                                .frame(width: 65)
+                            Text("Delete")
+                                .bold()
+                                .foregroundColor(.white)
+                        }
+                    }
+                }
+                
+                ItemRowView(item: item)
+                    .offset(x: item.offset)
+                    .gesture(DragGesture().updating($isDragging, body: { (value, state, _) in
+                        state = true
+                        onChanged(value: value, item: item)
+                    }).onEnded({ (value) in
+                        onEnd(value: value, item: item)
+                    }))
+                
+            }
+            .listRowSeparator(.hidden)
+            .padding(.horizontal)
+            .padding(.top, item == filtered.first ? 10 : 0)
+            .onDisappear {
+                withAnimation {
+                    if let index = items.firstIndex(where: { $0.id == item.id }) {
+                        items[index].offset = 0
+                    }
+                }
+            }
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Look for your item")
+    }
+}
 extension [Item] {
     func sort(on tab: String, items: [Item]) -> [Item] {
         if tab == "All" {
@@ -193,8 +202,8 @@ extension [Item] {
     }
 }
 
-#Preview {
-    HomeView()
-        .modelContainer(for: [Item.self])
-        
-}
+//#Preview {
+//    HomeView(notificationManager: NotificationsManager())
+//        .modelContainer(for: [Item.self])
+//        
+//}

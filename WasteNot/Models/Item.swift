@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftData
  
-@Model class Item: Identifiable, Equatable, Hashable {
+@Model final class Item: Identifiable, Equatable, Hashable {
     let id = UUID()
     var name: String
     var quantity: Int

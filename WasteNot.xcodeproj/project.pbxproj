@@ -18,6 +18,8 @@
 		788EF9EC2C451CCA00C164D2 /* ItemIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788EF9EB2C451CCA00C164D2 /* ItemIcon.swift */; };
 		78E1123B2C49EFB000C970DA /* BannerAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E1123A2C49EFB000C970DA /* BannerAdsManager.swift */; };
 		78E1123E2C49F03E00C970DA /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 78E1123D2C49F03E00C970DA /* GoogleMobileAds */; };
+		78E112422C4CD48100C970DA /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112412C4CD48100C970DA /* NotificationsManager.swift */; };
+		78E112442C4CE71500C970DA /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112432C4CE71500C970DA /* Setting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		788EF9EB2C451CCA00C164D2 /* ItemIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIcon.swift; sourceTree = "<group>"; };
 		78E1123A2C49EFB000C970DA /* BannerAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdsManager.swift; sourceTree = "<group>"; };
 		78E1123F2C49F17900C970DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		78E112412C4CD48100C970DA /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
+		78E112432C4CE71500C970DA /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 				788EF9E52C44DC4800C164D2 /* ItemRowView.swift */,
 				78E112392C49EF8700C970DA /* AdMod Ads */,
 				788EF9E72C44DC5700C164D2 /* Models */,
+				78E112402C4C91FC00C970DA /* NotificationsManager */,
 				788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */,
 				788EF9D12C44CE6E00C164D2 /* Preview Content */,
 			);
@@ -93,6 +98,7 @@
 			children = (
 				788EF9E92C44DC9900C164D2 /* Item.swift */,
 				788EF9EB2C451CCA00C164D2 /* ItemIcon.swift */,
+				78E112432C4CE71500C970DA /* Setting.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -103,6 +109,14 @@
 				78E1123A2C49EFB000C970DA /* BannerAdsManager.swift */,
 			);
 			path = "AdMod Ads";
+			sourceTree = "<group>";
+		};
+		78E112402C4C91FC00C970DA /* NotificationsManager */ = {
+			isa = PBXGroup;
+			children = (
+				78E112412C4CD48100C970DA /* NotificationsManager.swift */,
+			);
+			path = NotificationsManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,7 +199,9 @@
 				788EF9CC2C44CE6D00C164D2 /* WasteNotApp.swift in Sources */,
 				78E1123B2C49EFB000C970DA /* BannerAdsManager.swift in Sources */,
 				788EF9E42C44DB8600C164D2 /* AddEditView.swift in Sources */,
+				78E112442C4CE71500C970DA /* Setting.swift in Sources */,
 				788EF9DF2C44D9EE00C164D2 /* HomeView.swift in Sources */,
+				78E112422C4CD48100C970DA /* NotificationsManager.swift in Sources */,
 				788EF9EA2C44DC9900C164D2 /* Item.swift in Sources */,
 				788EF9E62C44DC4800C164D2 /* ItemRowView.swift in Sources */,
 				788EF9EC2C451CCA00C164D2 /* ItemIcon.swift in Sources */,

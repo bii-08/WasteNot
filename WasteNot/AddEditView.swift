@@ -15,6 +15,8 @@ struct AddEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var selectedItem: Item?
     
+    @ObservedObject var notificationManager: NotificationsManager
+    
     @State private var itemName = ""
     @State private var quantity = 1
     @State private var expiryDate = Date.now
@@ -136,7 +138,12 @@ struct AddEditView: View {
                             }
                             
                             let newItem = Item(name: itemName, quantity: quantity, purchasedDate: purchasedDate, expiryDate: expiryDate, image: newItemImageData, enumCaseString: enumCaseString)
-                            modelContext.insert(newItem)
+                                modelContext.insert(newItem)
+                            
+                            // Schedule notification for the new item
+                            notificationManager.scheduleNotification(for: newItem)
+                           
+                            
                         } else {
                             selectedItem?.name = itemName
                             selectedItem?.quantity = quantity
@@ -149,6 +156,10 @@ struct AddEditView: View {
                             } else if let selectedImage = selectedImage {
                                 selectedItem?.image = selectedImage.pngData() ?? Data()
                             }
+                            
+                            // Schedule notification for the updated item
+                            notificationManager.scheduleNotification(for: selectedItem!)
+                            
                         }
                         
                         dismiss()
@@ -275,6 +286,6 @@ struct ImagePicker: UIViewControllerRepresentable {
 }
 
 
-#Preview {
-    AddEditView(selectedItem: .constant(Item.init(name: "Apple", quantity: 2, purchasedDate: Date.now, expiryDate: Date.now, image: Data(), enumCaseString: "")))
-}
+//#Preview {
+//    AddEditView(selectedItem: .constant(Item.init(name: "Apple", quantity: 2, purchasedDate: Date.now, expiryDate: Date.now, image: Data(), enumCaseString: "")))
+//}
