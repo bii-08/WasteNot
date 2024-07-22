@@ -24,6 +24,7 @@ struct AddEditView: View {
     @State private var showingImagePicker = false
     
     @State private var selection: ItemIcon?
+    
     var enumCaseString: String? {
         return selection?.rawValue
     }
@@ -148,6 +149,7 @@ struct AddEditView: View {
                                 selectedItem?.enumCaseString = enumCaseString
                             } else if let selectedImage = selectedImage {
                                 selectedItem?.image = selectedImage.pngData() ?? Data()
+                                selectedItem?.enumCaseString = nil
                             }
                         }
                         
@@ -168,11 +170,18 @@ struct AddEditView: View {
                 }
             }
             .sheet(isPresented: $showingPhotoSelectionSheet, content: {
-                photoSelectionSheet()
+                NavigationStack {
+                    photoSelectionSheet()
+                        .navigationTitle("Select your item")
+                        .navigationBarTitleDisplayMode(.inline)
+                }
                 
             })
             .fullScreenCover(isPresented: $showingImagePicker) {
-                ImagePicker(image: $selectedImage)
+                ImagePicker { image in
+                    selectedImage = image
+                    selection = nil
+                }
             }
             .onAppear {
                 if let selectedItem = selectedItem {
@@ -199,11 +208,7 @@ struct AddEditView: View {
     
     @ViewBuilder private func photoSelectionSheet() -> some View {
         VStack(alignment: .leading) {
-            
-            Text("Select an icon")
-                .font(.title3)
-                .padding()
-            
+    
             Divider()
             
             List {
@@ -218,6 +223,7 @@ struct AddEditView: View {
                                 .background(RoundedRectangle(cornerRadius: 5).stroke(Color.primary, lineWidth: 2))
                                 .onTapGesture {
                                     selection = icon
+                                    selectedImage = nil
                                     print(selection as Any)
                                     showingPhotoSelectionSheet = false
                                 }
@@ -236,9 +242,10 @@ struct AddEditView: View {
 }
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
     @Environment(\.presentationMode) private var presentationMode
     var sourceType: UIImagePickerController.SourceType = .camera
+    
+    var onSelectImage: ((UIImage) -> Void)?
 
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePicker
@@ -249,7 +256,7 @@ struct ImagePicker: UIViewControllerRepresentable {
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                parent.image = uiImage
+                parent.onSelectImage?(uiImage)
             }
 
             parent.presentationMode.wrappedValue.dismiss()
