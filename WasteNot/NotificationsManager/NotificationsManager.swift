@@ -10,42 +10,59 @@ import UserNotifications
 import SwiftData
 import SwiftUI
 
+@MainActor
 class NotificationsManager: ObservableObject {
+    static let shared = NotificationsManager()
     
     @Published var setting: Setting {
         didSet {
             print("\(setting.notificationIsOn), \(setting.hour), \(setting.minute), \(setting.numsOfDayBefore)")
         }
     }
-    private var modelContext: ModelContext
     
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        
+    @Published var pendingRequests: [UNNotificationRequest] = []
+    @Published var isGranted = false
+    
+    var itemsToRechedule: [Item] = []
+    private var modelContext: ModelContext?
+    
+    init() {
+
         // Initialize currentTime with the provided hour and minute
         var components = DateComponents()
         components.hour = 8
         components.minute = 30
         let defaultTime = Calendar.current.date(from: components)
         
-        self.setting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 3, currentTime: defaultTime!)
-        
-        fetchSetting()
-        
+        self.setting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 0, currentTime: defaultTime!)
     }
     
-    static func askPermission() {
+   func askPermission() async {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
+                self.isGranted = true
                 print("Access granted!")
             } else if let error = error {
                 print(error.localizedDescription)
             }
         }
+        await getCurrentSettings()
     }
     
-    func scheduleNotification(for item: Item) {
+func getCurrentSettings() async {
+        let currentSettings = await UNUserNotificationCenter.current().notificationSettings()
+        if currentSettings.authorizationStatus == .authorized {
+            self.isGranted = true
+        } else {
+            self.isGranted = false
+        }
+    }
+    
+    func scheduleNotification(for item: Item) async {
         guard setting.notificationIsOn else { return }
+        
+        // Cancel existing notification for the item
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [item.id.uuidString])
         
         var trigger: UNNotificationTrigger?
         
@@ -57,21 +74,27 @@ class NotificationsManager: ObservableObject {
             trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             
             let content = UNMutableNotificationContent()
-            content.title = "Item Expiring Soon"
-            content.body = "\(item.name) is expiring in \(item.dayLeft) days"
+            content.title = "Waste Not!"
+            content.body = "\(item.name) is expiring in \(item.dayLeft) days."
             content.sound = UNNotificationSound.default
+           
+            if let image = UIImage(data: item.image),
+               let resizedImageData = resizeAndConvertImage(image),
+               let attachment = try? UNNotificationAttachment(identifier: UUID().uuidString, url: saveImageToDisk(data: resizedImageData), options: nil) {
+                content.attachments = [attachment]
+            }
             
             let request = UNNotificationRequest(
-                identifier: UUID().uuidString,
+                identifier: item.id.uuidString,
                 content: content,
                 trigger: trigger)
             
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Error adding notification: \(error.localizedDescription)")
-                } else {
-                    print("Notification scheduled successfully for \(item.name).")
-                }
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+                await getPendingRequests()
+                print("Notification scheduled successfully for \(item.name).")
+            } catch {
+                print("Error adding notification: \(error.localizedDescription)")
             }
             
         } else {
@@ -80,13 +103,24 @@ class NotificationsManager: ObservableObject {
         }
     }
     
-    func cancelNotification() {
+    func cancelNotification() async {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         print("cancel notifications")
+        await getPendingRequests()
     }
     
-    func fetchSetting() {
+    
+    func rescheduleNotification() async {
+        // Schedule notifications for itemsToReschedule
+        for item in itemsToRechedule {
+            await scheduleNotification(for: item)
+        }
+        await getPendingRequests()
+        itemsToRechedule.removeAll()
+    }
+    
+    func fetchSetting(modelContext: ModelContext) {
         let request = FetchDescriptor<Setting>()
         do {
             let data = try modelContext.fetch(request)
@@ -98,12 +132,69 @@ class NotificationsManager: ObservableObject {
                 components.hour = 8
                 components.minute = 30
                 let defaultTime = Calendar.current.date(from: components)
-                let defaultSetting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 3, currentTime: defaultTime!)
+                let defaultSetting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 0, currentTime: defaultTime!)
                 self.setting = defaultSetting
                 modelContext.insert(defaultSetting)
             }
         } catch {
             print("Failed to fetch settings: \(error.localizedDescription)")
+        }
+    }
+    
+   
+    
+    // Resize the image
+    func resizeAndConvertImage(_ image: UIImage, maxSize: CGFloat = 1024) -> Data? {
+        let size = image.size
+        let aspectRatio = size.width / size.height
+        
+        var newSize: CGSize
+        if aspectRatio > 1 {
+            newSize = CGSize(width: maxSize, height: maxSize / aspectRatio)
+        } else {
+            newSize = CGSize(width: maxSize * aspectRatio, height: maxSize)
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(origin: .zero, size: newSize))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage?.jpegData(compressionQuality: 0.8) // Convert to JPEG with 80% quality
+    }
+    
+    // Save the Image to a Temporary File URL
+    private func saveImageToDisk(data: Data) -> URL {
+        let fileManager = FileManager.default
+        let tempDirectory = fileManager.temporaryDirectory
+        let fileName = UUID().uuidString + ".jpg"
+        let fileURL = tempDirectory.appendingPathComponent(fileName)
+        
+        do {
+            try data.write(to: fileURL)
+            print("--> \(fileURL)")
+        } catch {
+            print("Error saving image to disk: \(error.localizedDescription)")
+        }
+        
+        return fileURL
+    }
+    
+   func getPendingRequests() async {
+        pendingRequests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+        print("Numbers of pending request: \(pendingRequests.count)")
+        for request in pendingRequests {
+            print("Pending notification: \(request.identifier), title: \(request.content.title), body: \(request.content.body)")
+        }
+    }
+    
+    func openSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(url) {
+                Task {
+                    await UIApplication.shared.open(url)
+                }
+            }
         }
     }
 }

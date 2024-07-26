@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         requestPermission() // For tracking
-        NotificationsManager.askPermission() // For sending local notifications
-        
+        Task {
+            await NotificationsManager.shared.askPermission() // For sending local notifications
+        }
         return true
     }
     

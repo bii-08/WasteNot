@@ -15,7 +15,7 @@ struct AddEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var selectedItem: Item?
     
-    @ObservedObject var notificationManager: NotificationsManager
+    @ObservedObject var notificationManager = NotificationsManager.shared
     
     @State private var itemName = ""
     @State private var quantity = 1
@@ -46,174 +46,178 @@ struct AddEditView: View {
        
         ZStack {
             Color("background").ignoresSafeArea()
-            VStack {
-                // Item name
-                HStack {
-                    Image(systemName: "pencil.and.scribble")
-                    Text("Item :")
-                        .padding(.trailing, 30)
-                    
-                    TextField("Eg. Apple", text: $itemName)
-                        .padding(10)
-                        .background(RoundedRectangle(cornerRadius: 5).fill(.gray.opacity(0.35)))
-                }
-                // Item quantity
-                HStack {
-                    Image(systemName: "cart.fill")
-                    Text("Quantity :")
-                        .padding(.trailing, 60)
-                    Stepper("\(quantity)", value: $quantity, in: 1...100)
-                }
-                // Purchased Date
-                HStack {
-                    Image(systemName: "calendar")
-                    Text("Purchased Date :")
-                    DatePicker("", selection: $purchasedDate, displayedComponents: .date)
-                    
-                }
-                // Expiry Date
-                HStack {
-                    Image(systemName: "calendar")
-                    Text("Expiry Date :")
-                    DatePicker("", selection: $expiryDate, displayedComponents: .date)
-                }
-                // Item's photo
-                HStack {
-                    Image(systemName: "photo")
-                    Text("Item's photo :")
-                    Spacer()
-                    
-                    Menu {
-                        Button("Choose from Icons") {
-                            showingPhotoSelectionSheet = true
-                        }
+            ScrollView {
+                
+                VStack {
+                    // Item name
+                    HStack {
+                        Image(systemName: "pencil.and.scribble")
+                        Text("Item :")
+                            .padding(.trailing, 30)
                         
-                        Button {
-                            showingImagePicker = true
+                        TextField("Eg. Apple", text: $itemName)
+                            .padding(10)
+                            .background(RoundedRectangle(cornerRadius: 5).fill(.gray.opacity(0.35)))
+                    }
+                    // Item quantity
+                    HStack {
+                        Image(systemName: "cart.fill")
+                        Text("Quantity :")
+                            .padding(.trailing, 60)
+                        Stepper("\(quantity)", value: $quantity, in: 1...100)
+                    }
+                    // Purchased Date
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("Purchased Date :")
+                        DatePicker("", selection: $purchasedDate, displayedComponents: .date)
+                        
+                    }
+                    // Expiry Date
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("Expiry Date :")
+                        DatePicker("", selection: $expiryDate, displayedComponents: .date)
+                    }
+                    // Item's photo
+                    HStack {
+                        Image(systemName: "photo")
+                        Text("Item's photo :")
+                        Spacer()
+                        
+                        Menu {
+                            Button("Choose from Icons") {
+                                showingPhotoSelectionSheet = true
+                            }
+                            
+                            Button {
+                                showingImagePicker = true
+                            } label: {
+                                Label("Take a Photo", systemImage: "camera")
+                            }
+                            
                         } label: {
-                            Label("Take a Photo", systemImage: "camera")
-                        }
-                        
-                    } label: {
-                        if selection == nil && selectedImage == nil {
-                            Image(systemName: "photo.badge.plus")
-                                .scaleEffect(2)
-                                .frame(maxWidth: 150, maxHeight: 150)
-                                .background(.gray.opacity(0.4))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                        } else {
-                            if let selectedIcon = selection {
-                                Image("\(selectedIcon)")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding()
-                                    .frame(maxWidth: 200, maxHeight: 200)
-                                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color.primary, lineWidth: 1))
-                            } else if let selectedImage = selectedImage {
-                                Image(uiImage: selectedImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: 200, maxHeight: 200)
-                                    .cornerRadius(10)
+                            if selection == nil && selectedImage == nil {
+                                Image(systemName: "photo.badge.plus")
+                                    .scaleEffect(2)
+                                    .frame(minWidth: 150, maxWidth: 180, minHeight: 150, maxHeight: 180)
+                                    .background(.gray.opacity(0.4))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            } else {
+                                if let selectedIcon = selection {
+                                    Image("\(selectedIcon)")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding()
+                                        .frame(minWidth: 200, maxWidth: 220, minHeight: 200, maxHeight: 220)
+                                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.primary, lineWidth: 1))
+                                } else if let selectedImage = selectedImage {
+                                    Image(uiImage: selectedImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(minWidth: 200, maxWidth: 220, minHeight: 200, maxHeight: 220)
+                                        .cornerRadius(10)
+                                }
                             }
                         }
                     }
-                }
-                Spacer()
-                
-                HStack {
-                    // Add/ Edit Button
-                    Button {
-                        if selectedItem == nil {
-                            let newItemImageData: Data
-                            if let selectedIcon = selection {
-                                if let iconImage = UIImage(named: "\(selectedIcon)") {
-                                    newItemImageData = iconImage.pngData() ?? Data()
+                    Spacer()
+                    
+                    HStack {
+                        // Add/ Edit Button
+                        Button {
+                            if selectedItem == nil {
+                                let newItemImageData: Data
+                                if let selectedIcon = selection {
+                                    if let iconImage = UIImage(named: "\(selectedIcon)") {
+                                        newItemImageData = iconImage.pngData() ?? Data()
+                                    } else {
+                                        newItemImageData = UIImage(systemName: "photo")!.pngData()!
+                                    }
+                                } else if let selectedImage = selectedImage {
+                                    newItemImageData = selectedImage.pngData()!
                                 } else {
                                     newItemImageData = UIImage(systemName: "photo")!.pngData()!
                                 }
-                            } else if let selectedImage = selectedImage {
-                                newItemImageData = selectedImage.pngData()!
-                            } else {
-                                newItemImageData = UIImage(systemName: "photo")!.pngData()!
-                            }
-                            
-                            let newItem = Item(name: itemName, quantity: quantity, purchasedDate: purchasedDate, expiryDate: expiryDate, image: newItemImageData, enumCaseString: enumCaseString)
+                                
+                                let newItem = Item(name: itemName, quantity: quantity, purchasedDate: purchasedDate, expiryDate: expiryDate, image: newItemImageData, enumCaseString: enumCaseString)
                                 modelContext.insert(newItem)
-                            
-                            // Schedule notification for the new item
-                            notificationManager.scheduleNotification(for: newItem)
-                           
-                            
-                        } else {
-                            selectedItem?.name = itemName
-                            selectedItem?.quantity = quantity
-                            selectedItem?.expiryDate = expiryDate
-                            selectedItem?.purchasedDate = purchasedDate
-                             
-                            if let selection = selection {
-                                selectedItem?.image = UIImage(named: "\(selection)")?.pngData() ?? Data()
-                                selectedItem?.enumCaseString = enumCaseString
-                            } else if let selectedImage = selectedImage {
-                                selectedItem?.image = selectedImage.pngData() ?? Data()
-                                selectedItem?.enumCaseString = nil
+                                Task {
+                                    // Schedule notification for the new item
+                                    await notificationManager.scheduleNotification(for: newItem)
+                                }
+                                
+                            } else {
+                                selectedItem?.name = itemName
+                                selectedItem?.quantity = quantity
+                                selectedItem?.expiryDate = expiryDate
+                                selectedItem?.purchasedDate = purchasedDate
+                                
+                                if let selection = selection {
+                                    selectedItem?.image = UIImage(named: "\(selection)")?.pngData() ?? Data()
+                                    selectedItem?.enumCaseString = enumCaseString
+                                } else if let selectedImage = selectedImage {
+                                    selectedItem?.image = selectedImage.pngData() ?? Data()
+                                    selectedItem?.enumCaseString = nil
+                                }
+                                Task {
+                                    // Schedule notification for the updated item
+                                    await notificationManager.scheduleNotification(for: selectedItem!)
+                                }
                             }
                             
-                            // Schedule notification for the updated item
-                            notificationManager.scheduleNotification(for: selectedItem!)
-                            
+                            dismiss()
+                        } label: {
+                            Label(selectedItem != nil ? "Change" : "Add", systemImage: "pencil")
                         }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(itemName.isEmpty)
                         
-                        dismiss()
-                    } label: {
-                        Label(selectedItem != nil ? "Change" : "Add", systemImage: "pencil")
+                        // Cancel Button
+                        Button {
+                            dismiss()
+                        } label: {
+                            Label("Cancel", systemImage: "xmark")
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(itemName.isEmpty)
+                }
+                .sheet(isPresented: $showingPhotoSelectionSheet, content: {
+                    NavigationStack {
+                        photoSelectionSheet()
+                            .navigationTitle("Select your item")
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
                     
-                    // Cancel Button
-                    Button {
-                        dismiss()
-                    } label: {
-                        Label("Cancel", systemImage: "xmark")
+                })
+                .fullScreenCover(isPresented: $showingImagePicker) {
+                    ImagePicker { image in
+                        selectedImage = image
+                        selection = nil
                     }
-                    .buttonStyle(.borderedProminent)
                 }
-            }
-            .sheet(isPresented: $showingPhotoSelectionSheet, content: {
-                NavigationStack {
-                    photoSelectionSheet()
-                        .navigationTitle("Select your item")
-                        .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    if let selectedItem = selectedItem {
+                        
+                        itemName = selectedItem.name
+                        quantity = selectedItem.quantity
+                        purchasedDate = selectedItem.purchasedDate
+                        expiryDate = selectedItem.expiryDate
+                        if selectedItem.enumCaseString == nil {
+                            selectedImage = UIImage(data: selectedItem.image)
+                        } else {
+                            selection = ItemIcon(rawValue: selectedItem.enumCaseString ?? "")
+                        }
+                    }
                 }
+                .onDisappear {
+                    selectedItem = nil
+                }
+                .padding()
+                .navigationTitle(selectedItem != nil ? "Editing Item" : "New Item")
+                .navigationBarTitleDisplayMode(.inline)
                 
-            })
-            .fullScreenCover(isPresented: $showingImagePicker) {
-                ImagePicker { image in
-                    selectedImage = image
-                    selection = nil
-                }
             }
-            .onAppear {
-                if let selectedItem = selectedItem {
-                    
-                    itemName = selectedItem.name
-                    quantity = selectedItem.quantity
-                    purchasedDate = selectedItem.purchasedDate
-                    expiryDate = selectedItem.expiryDate
-                    if selectedItem.enumCaseString == nil {
-                        selectedImage = UIImage(data: selectedItem.image)
-                    } else {
-                        selection = ItemIcon(rawValue: selectedItem.enumCaseString ?? "")
-                    }
-                }
-            }
-            .onDisappear {
-                selectedItem = nil
-            }
-            .padding()
-            .navigationTitle(selectedItem != nil ? "Editing Item" : "New Item")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
@@ -293,6 +297,6 @@ struct ImagePicker: UIViewControllerRepresentable {
 }
 
 
-//#Preview {
-//    AddEditView(selectedItem: .constant(Item.init(name: "Apple", quantity: 2, purchasedDate: Date.now, expiryDate: Date.now, image: Data(), enumCaseString: "")))
-//}
+#Preview {
+    AddEditView(selectedItem: .constant(Item.init(name: "Apple", quantity: 2, purchasedDate: Date.now, expiryDate: Date.now, image: Data(), enumCaseString: "")))
+}

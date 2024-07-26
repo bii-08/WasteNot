@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct HomeView: View {
+    @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) var modelContext
     @State private var showingSetting = false
     @State private var showingAddEdit = false
@@ -20,56 +22,84 @@ struct HomeView: View {
     }
     var tabs = ["All", "Near Expiry", "Expired"]
     @State private var currentTab = "All"
-    
     @GestureState var isDragging = false
     
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("background").ignoresSafeArea()
-                VStack {
-                    expiryTabBar
-                    
-                    ScrollView {
-                        itemsList
-                    }
-                    
-                    Spacer()
-                    
-                    BannerView()
-                        .frame(height: 50)
-                        .padding(.horizontal)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                }
-                .toolbar {
-                    // Header
-                    ToolbarItem(placement: .topBarLeading) {
-                        // Setting button
-                        Button {
-                            showingSetting = true
-                        } label: {
-                            Image(systemName: "gearshape.fill")
-                                .font(.title2)
+                if NotificationsManager.shared.isGranted {
+                    VStack {
+                        expiryTabBar
+                        
+                        ScrollView {
+                            if items.isEmpty {
+                                ContentUnavailableView("No items", systemImage: "refrigerator.fill", description: Text("Tap on Plus button to add your items"))
+                            } else {
+                                itemsList
+                            }
                         }
+                        
+                        Spacer()
+                        
+                        BannerView()
+                            .frame(height: 50)
+                            .padding(.horizontal)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        // Plus button
-                        Button {
-                            showingAddEdit = true
-                        } label: {
-                            Image(systemName: "plus.app.fill")
-                                .font(.title2)
+                    .toolbar {
+                        // Header
+                        ToolbarItem(placement: .topBarLeading) {
+                            // Setting button
+                            Button {
+                                showingSetting = true
+                            } label: {
+                                Image(systemName: "gearshape.fill")
+                                    .font(.title2)
+                            }
                         }
+                        
+                        ToolbarItem(placement: .topBarTrailing) {
+                            // Plus button
+                            Button {
+                                showingAddEdit = true
+                            } label: {
+                                Image(systemName: "plus.app.fill")
+                                    .font(.title2)
+                                    .symbolEffect(.pulse)
+                            }
+                        }
+                        
                     }
-                    
+                    .navigationDestination(isPresented: $showingSetting, destination: {
+                        SettingView()
+                    })
+                    .navigationDestination(isPresented: $showingAddEdit, destination: {
+                        AddEditView(selectedItem: $selectedItem)
+                        
+                    })
+                } else {
+                    Button("Enable Notifications") {
+                        NotificationsManager.shared.openSettings()
+                    }
+                    .buttonStyle(.bordered)
                 }
-                .navigationDestination(isPresented: $showingSetting, destination: {
-                    SettingView(notificationManager: NotificationsManager(modelContext: modelContext))
-                })
-                .navigationDestination(isPresented: $showingAddEdit, destination: {
-                    AddEditView(selectedItem: $selectedItem, notificationManager: NotificationsManager(modelContext: modelContext))
-                })
+            }
+           
+        }
+        .onAppear {
+            NotificationsManager.shared.fetchSetting(modelContext: modelContext)
+            
+        }
+        .onChange(of: scenePhase) { oldValue, newValue in
+            if newValue == .active {
+                Task {
+                    await NotificationsManager.shared.getCurrentSettings()
+                }
+            }
+            
+            if newValue == .background {
+                WidgetCenter.shared.reloadAllTimelines()
             }
         }
     }
@@ -151,6 +181,12 @@ extension HomeView {
                             // Delete logics here
                             if let index = items.firstIndex(where: { $0.id == item.id }) {
                                 modelContext.delete(items[index])
+                                
+                                // Cancel existing notification for the item
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [item.id.uuidString])
+                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [item.id.uuidString])
+                                print("Deleted the item and Canceled the pending notification")
+                                
                             }
                         }
                     } label: {
@@ -202,8 +238,8 @@ extension [Item] {
     }
 }
 
-//#Preview {
-//    HomeView(notificationManager: NotificationsManager())
-//        .modelContainer(for: [Item.self])
-//        
-//}
+#Preview {
+    HomeView()
+        .modelContainer(for: [Item.self, Setting.self])
+        
+}
