@@ -1,0 +1,126 @@
+{
+  "identifier" : "98564381",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "D5C9E451",
+      "localizations" : [
+        {
+          "description" : "Gimme me a candy bar of thanks.",
+          "displayName" : "Love for Candy 🍬",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bii.WasteNot.tinyTip",
+      "referenceName" : "Tiny Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "CBB11AB6",
+      "localizations" : [
+        {
+          "description" : "Gimme a roll of sushi. A nice Tip!",
+          "displayName" : "Love for Sushi 🍣",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bii.WasteNot.smallTip",
+      "referenceName" : "Small Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "36DE3253",
+      "localizations" : [
+        {
+          "description" : "Gimme a cup of Cappucino. Real nice of you!",
+          "displayName" : "Love for Coffee ☕️",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bii.WasteNot.mediumTip",
+      "referenceName" : "MediumTip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "8.99",
+      "familyShareable" : false,
+      "internalID" : "5494FF8C",
+      "localizations" : [
+        {
+          "description" : "You are the best! A muffin & coffee for sure.",
+          "displayName" : "Love for Breakfast 🧁",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bii.WasteNot.largeTip",
+      "referenceName" : "Large Tip",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_billingIssuesEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

@@ -72,21 +72,21 @@ struct WidgetExtensionEntryView : View {
                         }
                         ForEach(entry.expiringItems.filter({$0.dayLeft >= 0})) { item in
                             HStack {
-                                if let uiImage = UIImage(data: item.image) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .aspectRatio(contentMode: item.enumCaseString == nil ? .fill : .fit)
-                                        .frame(maxWidth: 10, maxHeight: item.enumCaseString == nil ? 10 : 10)
-                                        .cornerRadius(5)
-                                    
-                                } else {
-                                    Image(systemName: "photo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(maxWidth: 10, maxHeight: 10)
-                                }
+//                                if let uiImage = UIImage(data: item.image) {
+//                                    Image(uiImage: uiImage)
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fit)
+//                                        .frame(width: 10, height: 10)
+//                                        .cornerRadius(5)
+//                                    
+//                                } else {
+//                                    Image(systemName: "photo")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 10, height: 10)
+//                                }
                                 
-                                Text(item.name)
+                                Text(item.name.capitalized)
                                 Spacer()
                                 
                                 Text("^[\(item.dayLeft) day](inflect: true)")

@@ -11,6 +11,9 @@ import SwiftData
 struct SettingView: View {
     @Environment(\.modelContext) var modelContext
     @ObservedObject var notificationManager = NotificationsManager.shared
+    @EnvironmentObject private var store: TipStore
+    @State private var showTips = false
+    @State private var showThanks = false
     @Query var items: [Item]
     var body: some View {
         NavigationStack {
@@ -34,6 +37,7 @@ struct SettingView: View {
                                 }
                                 print("Numbers of pending request: \(notificationManager.pendingRequests.count)")
                             }
+                            .disabled(showThanks)
                     } header: {
                         Text("Notifications enable")
                     } footer: {
@@ -53,6 +57,7 @@ struct SettingView: View {
                                     await notificationManager.rescheduleNotification()
                                 }
                             }
+                            .disabled(showThanks)
                     } header: {
                         Text("Notification time")
                     }
@@ -68,6 +73,7 @@ struct SettingView: View {
                                     await notificationManager.rescheduleNotification()
                                 }
                             }
+                            .disabled(showThanks)
                     } header: {
                         Text("Expiry Reminder")
                     } footer: {
@@ -92,17 +98,66 @@ struct SettingView: View {
                                 await notificationManager.rescheduleNotification()
                             }
                         }
+                        .disabled(showThanks)
+                    }
+                    
+                    Section {
+                        
+                        Button("Tip me") {
+                            showTips.toggle()
+                        }
+                        .disabled(showThanks)
+                        
+                        
+                    } footer: {
+                        Text("")
                     }
                 }
                 .background(Color("background"))
                 .scrollContentBackground(.hidden)
             }
-            .navigationTitle("Setting")
+            .navigationTitle(showTips ? "" : "Setting")
+            .navigationBarBackButtonHidden(showThanks)
             .onAppear {
                 Task {
                     await notificationManager.getPendingRequests()
                 }
             }
+            .overlay {
+                if showTips {
+                    Color.black.opacity(0.8)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                        .onTapGesture {
+                            showTips.toggle()
+                        }
+                    TipsView {
+                        showTips.toggle()
+                    }
+                    .environmentObject(store)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .overlay(alignment: .bottom) {
+                if showThanks {
+                    ThanksView {
+                        showThanks = false
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.spring(), value: showTips)
+            .animation(.spring(), value: showThanks)
+            .onChange(of: store.action) { oldValue, action in
+                if action == .successful {
+                    showTips = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        showThanks = true
+                        store.reset()
+                    }
+                }
+            }
+            .alert(isPresented: $store.hasError, error: store.error) {}
         }
     }
 }
@@ -112,6 +167,7 @@ struct SettingView: View {
         
         SettingView(notificationManager: NotificationsManager.shared)
             .modelContainer(for: [Setting.self])
+            .environmentObject(TipStore())
            
     }
 }

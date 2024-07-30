@@ -53,8 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 struct WasteNotApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let modelContainer: ModelContainer
-    
+    @StateObject private var store = TipStore()
     init() {
+        Task {
+            await NotificationsManager.shared.getCurrentSettings()
+        }
         do {
             modelContainer = try ModelContainer(for: Item.self, Setting.self)
         } catch {
@@ -67,6 +70,7 @@ struct WasteNotApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(store)
         }
         .modelContainer(modelContainer)
     }

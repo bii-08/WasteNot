@@ -25,6 +25,12 @@
 		78BF693A2C53541700321DD6 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788EF9E92C44DC9900C164D2 /* Item.swift */; };
 		78BF693B2C53541C00321DD6 /* ItemIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788EF9EB2C451CCA00C164D2 /* ItemIcon.swift */; };
 		78BF693C2C53541F00321DD6 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112432C4CE71500C970DA /* Setting.swift */; };
+		78DC2F882C56354600CC0C65 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC2F872C56354600CC0C65 /* StoreKit.framework */; };
+		78DC2F8B2C563F3600CC0C65 /* ProductsIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DC2F8A2C563F3600CC0C65 /* ProductsIdentifiers.swift */; };
+		78DC2F8E2C563FE700CC0C65 /* Tipstore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DC2F8D2C563FE700CC0C65 /* Tipstore.swift */; };
+		78DC2F922C56459300CC0C65 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DC2F912C56459300CC0C65 /* TipsView.swift */; };
+		78DC2F942C56465600CC0C65 /* TipsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DC2F932C56465600CC0C65 /* TipsItemView.swift */; };
+		78DC2F962C56577D00CC0C65 /* ThanksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DC2F952C56577D00CC0C65 /* ThanksView.swift */; };
 		78E1123B2C49EFB000C970DA /* BannerAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E1123A2C49EFB000C970DA /* BannerAdsManager.swift */; };
 		78E1123E2C49F03E00C970DA /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 78E1123D2C49F03E00C970DA /* GoogleMobileAds */; };
 		78E112422C4CD48100C970DA /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112412C4CD48100C970DA /* NotificationsManager.swift */; };
@@ -75,6 +81,13 @@
 		78BF69332C5353F200321DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78BF693D2C53599900321DD6 /* WidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
 		78BF693E2C535A2800321DD6 /* WasteNot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteNot.entitlements; sourceTree = "<group>"; };
+		78DC2F872C56354600CC0C65 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		78DC2F892C5635F000CC0C65 /* MyTipsStoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyTipsStoreKitConfiguration.storekit; sourceTree = "<group>"; };
+		78DC2F8A2C563F3600CC0C65 /* ProductsIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsIdentifiers.swift; sourceTree = "<group>"; };
+		78DC2F8D2C563FE700CC0C65 /* Tipstore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tipstore.swift; sourceTree = "<group>"; };
+		78DC2F912C56459300CC0C65 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
+		78DC2F932C56465600CC0C65 /* TipsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsItemView.swift; sourceTree = "<group>"; };
+		78DC2F952C56577D00CC0C65 /* ThanksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksView.swift; sourceTree = "<group>"; };
 		78E1123A2C49EFB000C970DA /* BannerAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdsManager.swift; sourceTree = "<group>"; };
 		78E1123F2C49F17900C970DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		78E112412C4CD48100C970DA /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
@@ -87,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E1123E2C49F03E00C970DA /* GoogleMobileAds in Frameworks */,
+				78DC2F882C56354600CC0C65 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,13 +142,18 @@
 				78BF693E2C535A2800321DD6 /* WasteNot.entitlements */,
 				78E1123F2C49F17900C970DA /* Info.plist */,
 				788EF9CB2C44CE6D00C164D2 /* WasteNotApp.swift */,
+				78DC2F892C5635F000CC0C65 /* MyTipsStoreKitConfiguration.storekit */,
 				788EF9DE2C44D9EE00C164D2 /* HomeView.swift */,
 				788EF9E12C44DB2C00C164D2 /* SettingView.swift */,
 				788EF9E32C44DB8600C164D2 /* AddEditView.swift */,
 				788EF9E52C44DC4800C164D2 /* ItemRowView.swift */,
+				78DC2F912C56459300CC0C65 /* TipsView.swift */,
+				78DC2F932C56465600CC0C65 /* TipsItemView.swift */,
+				78DC2F952C56577D00CC0C65 /* ThanksView.swift */,
 				78E112392C49EF8700C970DA /* AdMod Ads */,
 				788EF9E72C44DC5700C164D2 /* Models */,
 				78E112402C4C91FC00C970DA /* NotificationsManager */,
+				78DC2F8C2C563FAB00CC0C65 /* Tipstore */,
 				788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */,
 				788EF9D12C44CE6E00C164D2 /* Preview Content */,
 			);
@@ -155,6 +174,7 @@
 				788EF9E92C44DC9900C164D2 /* Item.swift */,
 				788EF9EB2C451CCA00C164D2 /* ItemIcon.swift */,
 				78E112432C4CE71500C970DA /* Setting.swift */,
+				78DC2F8A2C563F3600CC0C65 /* ProductsIdentifiers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -162,6 +182,7 @@
 		78BF690E2C534F5C00321DD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78DC2F872C56354600CC0C65 /* StoreKit.framework */,
 				78BF690F2C534F5C00321DD6 /* WidgetKit.framework */,
 				78BF69112C534F5C00321DD6 /* SwiftUI.framework */,
 			);
@@ -177,6 +198,14 @@
 				78BF69332C5353F200321DD6 /* Info.plist */,
 			);
 			path = WidgetExtension;
+			sourceTree = "<group>";
+		};
+		78DC2F8C2C563FAB00CC0C65 /* Tipstore */ = {
+			isa = PBXGroup;
+			children = (
+				78DC2F8D2C563FE700CC0C65 /* Tipstore.swift */,
+			);
+			path = Tipstore;
 			sourceTree = "<group>";
 		};
 		78E112392C49EF8700C970DA /* AdMod Ads */ = {
@@ -305,13 +334,18 @@
 				788EF9E22C44DB2C00C164D2 /* SettingView.swift in Sources */,
 				788EF9CC2C44CE6D00C164D2 /* WasteNotApp.swift in Sources */,
 				78E1123B2C49EFB000C970DA /* BannerAdsManager.swift in Sources */,
+				78DC2F8E2C563FE700CC0C65 /* Tipstore.swift in Sources */,
 				788EF9E42C44DB8600C164D2 /* AddEditView.swift in Sources */,
+				78DC2F962C56577D00CC0C65 /* ThanksView.swift in Sources */,
+				78DC2F922C56459300CC0C65 /* TipsView.swift in Sources */,
+				78DC2F8B2C563F3600CC0C65 /* ProductsIdentifiers.swift in Sources */,
 				78E112442C4CE71500C970DA /* Setting.swift in Sources */,
 				788EF9DF2C44D9EE00C164D2 /* HomeView.swift in Sources */,
 				78E112422C4CD48100C970DA /* NotificationsManager.swift in Sources */,
 				788EF9EA2C44DC9900C164D2 /* Item.swift in Sources */,
 				788EF9E62C44DC4800C164D2 /* ItemRowView.swift in Sources */,
 				788EF9EC2C451CCA00C164D2 /* ItemIcon.swift in Sources */,
+				78DC2F942C56465600CC0C65 /* TipsItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
