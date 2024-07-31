@@ -23,4 +23,3 @@ import SwiftData
         self.currentTime = currentTime
     }
 }
-

@@ -235,6 +235,7 @@
 				788EF9C52C44CE6D00C164D2 /* Frameworks */,
 				788EF9C62C44CE6D00C164D2 /* Resources */,
 				78BF691E2C534F5F00321DD6 /* Embed Foundation Extensions */,
+				78DC2F972C58952F00CC0C65 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -325,6 +326,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78DC2F972C58952F00CC0C65 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"/opt/homebrew/bin:$PATH\"\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		788EF9C42C44CE6D00C164D2 /* Sources */ = {
@@ -503,6 +525,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WasteNot/Preview Content\"";
 				DEVELOPMENT_TEAM = 49H596ZHS6;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WasteNot/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs to capture image to show in the app.";

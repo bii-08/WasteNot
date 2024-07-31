@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-
 @main
 struct WasteNotApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate

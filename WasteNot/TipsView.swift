@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TipsView: View {
     @EnvironmentObject private var store: TipStore
-    var didTapClose: () -> ()
+    var didTapClose: () -> Void
     var body: some View {
         VStack(spacing: 8) {
             HStack {

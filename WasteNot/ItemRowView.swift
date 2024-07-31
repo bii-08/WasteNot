@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ItemRowView: View {
+    //MARK: - Property
     var item: Item
     
     var body: some View {
         HStack {
+            //MARK: Item image
             if let uiImage = UIImage(data: item.image) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -26,13 +28,13 @@ struct ItemRowView: View {
                     .frame(maxWidth: 85, maxHeight: 85)
             }
             
+            //MARK: Item details
             VStack(alignment: .leading, spacing: 12) {
                 Text(item.name)
                     .foregroundColor(.primary)
                     .font(.title3)
                     .fontWeight(.bold)
                 
-                   
                 HStack(spacing: 5) {
                  
                     Image(systemName: "calendar")

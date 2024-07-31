@@ -10,6 +10,7 @@ import SwiftData
 import WidgetKit
 
 struct HomeView: View {
+    //MARK: - Property
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) var modelContext
     @State private var showingSetting = false
@@ -91,7 +92,7 @@ struct HomeView: View {
             NotificationsManager.shared.fetchSetting(modelContext: modelContext)
             
         }
-        .onChange(of: scenePhase) { oldValue, newValue in
+        .onChange(of: scenePhase) { _, newValue in
             if newValue == .active {
                 Task {
                     await NotificationsManager.shared.getCurrentSettings()
@@ -104,6 +105,7 @@ struct HomeView: View {
         }
     }
     
+    //MARK: - Functions
     func onChanged(value: DragGesture.Value, item: Item) {
         if value.translation.width < 0 && isDragging {
             withAnimation {
@@ -123,6 +125,7 @@ struct HomeView: View {
     }
 }
 
+//MARK: - Extension
 extension HomeView {
     private var expiryTabBar: some View {
         HStack(spacing: 0) {
@@ -149,13 +152,9 @@ extension HomeView {
                 // Background (delete button)
                 Color.red.opacity(0.9)
                     .cornerRadius(20)
-//                                    .frame(minHeight: 115)
-                
-                // Background (edit button)
                 Color.orange.opacity(0.9)
                     .cornerRadius(20)
                     .padding(.trailing, 65)
-//                                    .frame(minHeight: 115)
                 
                 HStack {
                     Spacer()

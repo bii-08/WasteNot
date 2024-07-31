@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ThanksView: View {
-    var didTapClose: () -> ()
+    var didTapClose: () -> Void
     
     var body: some View {
         VStack(spacing: 8) {

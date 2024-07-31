@@ -14,12 +14,12 @@ struct Provider: TimelineProvider {
         SimpleEntry(date: Date(), expiringItems: getNearExpiryItems())
     }
 
-    @MainActor func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    @MainActor func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         let entry = SimpleEntry(date: Date(), expiringItems: getNearExpiryItems())
         completion(entry)
     }
 
-    @MainActor func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    @MainActor func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         var entries: [SimpleEntry] = []
 
         let entry = SimpleEntry(date: .now, expiringItems: getNearExpiryItems())
@@ -46,7 +46,7 @@ struct SimpleEntry: TimelineEntry {
     let expiringItems: [Item]
 }
 
-struct WidgetExtensionEntryView : View {
+struct WidgetExtensionEntryView: View {
     var entry: Provider.Entry
     @Query private var items: [Item]
     @Environment(\.widgetFamily) var family
@@ -72,20 +72,6 @@ struct WidgetExtensionEntryView : View {
                         }
                         ForEach(entry.expiringItems.filter({$0.dayLeft >= 0})) { item in
                             HStack {
-//                                if let uiImage = UIImage(data: item.image) {
-//                                    Image(uiImage: uiImage)
-//                                        .resizable()
-//                                        .aspectRatio(contentMode: .fit)
-//                                        .frame(width: 10, height: 10)
-//                                        .cornerRadius(5)
-//                                    
-//                                } else {
-//                                    Image(systemName: "photo")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 10, height: 10)
-//                                }
-                                
                                 Text(item.name.capitalized)
                                 Spacer()
                                 

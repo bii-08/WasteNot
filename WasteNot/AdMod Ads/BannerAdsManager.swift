@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Foundation
 import GoogleMobileAds
 import UIKit
 import SwiftUI
 
-struct BannerView: UIViewControllerRepresentable{
+struct BannerView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> some UIViewController {
         let viewController = BannerAdViewController()
@@ -23,7 +22,7 @@ struct BannerView: UIViewControllerRepresentable{
     }
 }
 
-class BannerAdViewController: UIViewController, GADBannerViewDelegate{
+class BannerAdViewController: UIViewController, GADBannerViewDelegate {
     var bannerView: GADBannerView?
     #if DEBUG
     // test
@@ -51,7 +50,7 @@ class BannerAdViewController: UIViewController, GADBannerViewDelegate{
         }
     }
     
-    private func loadBannerAd(){
+    private func loadBannerAd() {
         // adding Unit Id
         bannerView = GADBannerView(adSize: GADAdSizeBanner)
         bannerView?.adUnitID = adUnitId
@@ -71,11 +70,11 @@ class BannerAdViewController: UIViewController, GADBannerViewDelegate{
         setAdView(bannerView!)
     }
     
-    func setAdView(_ view: GADBannerView){
+    func setAdView(_ view: GADBannerView) {
         bannerView = view
         self.view.addSubview(bannerView!)
         bannerView?.translatesAutoresizingMaskIntoConstraints = false
-        let viewDictionary: [String : Any] = ["_bannerView" : bannerView as Any]
+        let viewDictionary: [String: Any] = ["_bannerView": bannerView as Any]
         self.view.addConstraints(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|[_bannerView]|", metrics: nil, views: viewDictionary)
         )
@@ -85,4 +84,3 @@ class BannerAdViewController: UIViewController, GADBannerViewDelegate{
         )
     }
 }
-

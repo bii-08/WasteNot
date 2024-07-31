@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct SettingView: View {
+    //MARK: - Property
     @Environment(\.modelContext) var modelContext
     @ObservedObject var notificationManager = NotificationsManager.shared
     @EnvironmentObject private var store: TipStore
@@ -18,12 +19,11 @@ struct SettingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                
                 List {
-                    // Enable notifications
+                    //MARK: Enable notifications
                     Section {
                         Toggle("Notifications", isOn: $notificationManager.setting.notificationIsOn)
-                            .onChange(of: notificationManager.setting.notificationIsOn) { oldValue, newValue in
+                            .onChange(of: notificationManager.setting.notificationIsOn) { _, newValue in
                                 if newValue == false {
                                     Task {
                                        await notificationManager.cancelNotification()
@@ -44,10 +44,10 @@ struct SettingView: View {
                         Text("Get notifications when items nearly expiry")
                     }
                     
-                    // Remind me at
+                    //MARK: Remind me at
                     Section {
                         DatePicker("Remind me at", selection: $notificationManager.setting.currentTime, displayedComponents: .hourAndMinute)
-                            .onChange(of: notificationManager.setting.currentTime) { oldValue, newValue in
+                            .onChange(of: notificationManager.setting.currentTime) { _, newValue in
                                 let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
                                 notificationManager.setting.hour = Int(components.hour ?? 8)
                                 notificationManager.setting.minute = Int(components.minute ?? 30)
@@ -64,10 +64,10 @@ struct SettingView: View {
                     .datePickerStyle(.compact)
                     .environment(\.locale, .init(identifier: "en"))
                     
-                    // Send notification before ... days
+                    //MARK: Send notification before ... days
                     Section {
                         Stepper("^[\(notificationManager.setting.numsOfDayBefore) day](inflect: true) before", value: $notificationManager.setting.numsOfDayBefore, in: 0...100)
-                            .onChange(of: notificationManager.setting.numsOfDayBefore) { oldValue, newValue in
+                            .onChange(of: notificationManager.setting.numsOfDayBefore) { _, _ in
                                 notificationManager.itemsToRechedule = items
                                 Task {
                                     await notificationManager.rescheduleNotification()
@@ -80,7 +80,7 @@ struct SettingView: View {
                         Text("Notifications will be sent this many days before the item expires")
                     }
                     
-                    // Reset to default settings
+                    //MARK: Reset to default settings
                     Section {
                         Button("Reset Settings") {
                             notificationManager.setting.notificationIsOn = true
@@ -101,13 +101,12 @@ struct SettingView: View {
                         .disabled(showThanks)
                     }
                     
+                    //MARK: Tip me
                     Section {
-                        
                         Button("Tip me") {
                             showTips.toggle()
                         }
                         .disabled(showThanks)
-                        
                         
                     } footer: {
                         Text("")
@@ -148,7 +147,7 @@ struct SettingView: View {
             }
             .animation(.spring(), value: showTips)
             .animation(.spring(), value: showThanks)
-            .onChange(of: store.action) { oldValue, action in
+            .onChange(of: store.action) { _, action in
                 if action == .successful {
                     showTips = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
