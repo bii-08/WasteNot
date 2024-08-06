@@ -43,10 +43,10 @@ struct HomeView: View {
                         
                         Spacer()
                         
-//                        BannerView()
-//                            .frame(height: 50)
-//                            .padding(.horizontal)
-//                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        BannerView()
+                            .frame(height: 50)
+                            .padding(.horizontal)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .toolbar {
                         // Header

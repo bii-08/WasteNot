@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7871AB802C5BB9DC00F5EEE8 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */; };
 		788EF9CC2C44CE6D00C164D2 /* WasteNotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788EF9CB2C44CE6D00C164D2 /* WasteNotApp.swift */; };
 		788EF9D02C44CE6E00C164D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */; };
 		788EF9D32C44CE6E00C164D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788EF9D22C44CE6E00C164D2 /* Preview Assets.xcassets */; };
@@ -66,7 +65,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		788EF9C82C44CE6D00C164D2 /* WasteNot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteNot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		788EF9CB2C44CE6D00C164D2 /* WasteNotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasteNotApp.swift; sourceTree = "<group>"; };
 		788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				78DC2F912C56459300CC0C65 /* TipsView.swift */,
 				78DC2F932C56465600CC0C65 /* TipsItemView.swift */,
 				78DC2F952C56577D00CC0C65 /* ThanksView.swift */,
-				7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */,
 				78E112392C49EF8700C970DA /* AdMod Ads */,
 				788EF9E72C44DC5700C164D2 /* Models */,
 				78E112402C4C91FC00C970DA /* NotificationsManager */,
@@ -384,7 +381,6 @@
 				78DC2F8E2C563FE700CC0C65 /* Tipstore.swift in Sources */,
 				788EF9E42C44DB8600C164D2 /* AddEditView.swift in Sources */,
 				78DC2F962C56577D00CC0C65 /* ThanksView.swift in Sources */,
-				7871AB802C5BB9DC00F5EEE8 /* Testing.swift in Sources */,
 				78DC2F922C56459300CC0C65 /* TipsView.swift in Sources */,
 				78DC2F8B2C563F3600CC0C65 /* ProductsIdentifiers.swift in Sources */,
 				78E112442C4CE71500C970DA /* Setting.swift in Sources */,
@@ -472,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -529,7 +525,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -561,6 +557,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -595,6 +592,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -621,6 +619,7 @@
 				INFOPLIST_FILE = WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,6 +648,7 @@
 				INFOPLIST_FILE = WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
