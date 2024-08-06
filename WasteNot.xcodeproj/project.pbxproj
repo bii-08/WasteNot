@@ -129,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				78E980212C6094F9007C6292 /* README.md */,
-				78E980222C60F3C8007C6292 /* Images */,
+				78E980222C60F3C8007C6292 /* Readme_Images */,
 				78BF693D2C53599900321DD6 /* WidgetExtensionExtension.entitlements */,
 				788EF9CA2C44CE6D00C164D2 /* WasteNot */,
 				78BF692C2C5353F000321DD6 /* WidgetExtension */,
@@ -236,13 +236,13 @@
 			path = NotificationsManager;
 			sourceTree = "<group>";
 		};
-		78E980222C60F3C8007C6292 /* Images */ = {
+		78E980222C60F3C8007C6292 /* Readme_Images */ = {
 			isa = PBXGroup;
 			children = (
 				78E980272C61B668007C6292 /* Screenshots.png */,
 				78E980232C60F41B007C6292 /* WasteNot_Cover.png */,
 			);
-			path = Images;
+			path = Readme_Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

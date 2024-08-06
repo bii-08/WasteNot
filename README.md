@@ -1,4 +1,4 @@
-# ![Cover](WasteNot_Cover.png)
+# ![Cover](https://github.com/bii-08/WasteNot/blob/main/Readme_Images/WasteNot_Cover.png)
 
 ![Buit on](https://img.shields.io/badge/Built_on-Swift-red?logo=Swift)
 ![Interface](https://img.shields.io/badge/Interface-SwiftUI-yellow)
@@ -10,7 +10,7 @@
 
 ## 📸 Screenshots
 
-![Image](Screenshots.png)
+![Image](https://github.com/bii-08/WasteNot/blob/main/Readme_Images/Screenshots.png)
 
 ## 🚀 Features
 
