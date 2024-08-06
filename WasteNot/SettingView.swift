@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct SettingView: View {
-    //MARK: - Property
+    // MARK: - Property
     @Environment(\.modelContext) var modelContext
     @ObservedObject var notificationManager = NotificationsManager.shared
     @EnvironmentObject private var store: TipStore
@@ -20,7 +20,7 @@ struct SettingView: View {
         NavigationStack {
             ZStack {
                 List {
-                    //MARK: Enable notifications
+                    // MARK: Enable notifications
                     Section {
                         Toggle("Notifications", isOn: $notificationManager.setting.notificationIsOn)
                             .onChange(of: notificationManager.setting.notificationIsOn) { _, newValue in
@@ -44,7 +44,7 @@ struct SettingView: View {
                         Text("Get notifications when items nearly expiry")
                     }
                     
-                    //MARK: Remind me at
+                    // MARK: Remind me at
                     Section {
                         DatePicker("Remind me at", selection: $notificationManager.setting.currentTime, displayedComponents: .hourAndMinute)
                             .onChange(of: notificationManager.setting.currentTime) { _, newValue in
@@ -64,7 +64,7 @@ struct SettingView: View {
                     .datePickerStyle(.compact)
                     .environment(\.locale, .init(identifier: "en"))
                     
-                    //MARK: Send notification before ... days
+                    // MARK: Send notification before ... days
                     Section {
                         Stepper("^[\(notificationManager.setting.numsOfDayBefore) day](inflect: true) before", value: $notificationManager.setting.numsOfDayBefore, in: 0...100)
                             .onChange(of: notificationManager.setting.numsOfDayBefore) { _, _ in
@@ -80,7 +80,7 @@ struct SettingView: View {
                         Text("Notifications will be sent this many days before the item expires")
                     }
                     
-                    //MARK: Reset to default settings
+                    // MARK: Reset to default settings
                     Section {
                         Button("Reset Settings") {
                             notificationManager.setting.notificationIsOn = true
@@ -101,7 +101,7 @@ struct SettingView: View {
                         .disabled(showThanks)
                     }
                     
-                    //MARK: Tip me
+                    // MARK: Tip me
                     Section {
                         Button("Tip me") {
                             showTips.toggle()

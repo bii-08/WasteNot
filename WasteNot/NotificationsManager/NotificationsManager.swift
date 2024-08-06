@@ -12,7 +12,7 @@ import SwiftUI
 
 @MainActor
 class NotificationsManager: ObservableObject {
-    //MARK: - Property
+    // MARK: - Property
     static let shared = NotificationsManager()
     
     @Published var setting: Setting {
@@ -27,7 +27,7 @@ class NotificationsManager: ObservableObject {
     var itemsToRechedule: [Item] = []
     private var modelContext: ModelContext?
     
-    //MARK: - Initializer
+    // MARK: - Initializer
     init() {
 
         // Initialize currentTime with the provided hour and minute
@@ -39,7 +39,7 @@ class NotificationsManager: ObservableObject {
         self.setting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 0, currentTime: defaultTime!)
     }
     
-    //MARK: - Functions
+    // MARK: - Functions
    func askPermission() async {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {

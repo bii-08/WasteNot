@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ItemRowView: View {
-    //MARK: - Property
+    // MARK: - Property
     var item: Item
     
     var body: some View {
         HStack {
-            //MARK: Item image
+            // MARK: Item image
             if let uiImage = UIImage(data: item.image) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -28,7 +28,7 @@ struct ItemRowView: View {
                     .frame(maxWidth: 85, maxHeight: 85)
             }
             
-            //MARK: Item details
+            // MARK: Item details
             VStack(alignment: .leading, spacing: 12) {
                 Text(item.name)
                     .foregroundColor(.primary)
@@ -63,7 +63,7 @@ struct ItemRowView: View {
         .frame(minWidth: 325, maxWidth: .infinity)
         .padding(.horizontal)
         .background(Color("itemRow"))
-        .cornerRadius(20)
+        .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.08), radius: 10, x: 5, y: 5)
         .shadow(color: Color.black.opacity(0.08), radius: 10, x: -5, y: -5)
     }

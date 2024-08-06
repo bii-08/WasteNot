@@ -8,9 +8,10 @@
 import SwiftUI
 import SwiftData
 import WidgetKit
+import SwipeTammie
 
 struct HomeView: View {
-    //MARK: - Property
+    // MARK: - Property
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) var modelContext
     @State private var showingSetting = false
@@ -23,7 +24,6 @@ struct HomeView: View {
     }
     var tabs = ["All", "Near Expiry", "Expired"]
     @State private var currentTab = "All"
-    @GestureState var isDragging = false
     
     var body: some View {
         NavigationStack {
@@ -43,10 +43,10 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        BannerView()
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+//                        BannerView()
+//                            .frame(height: 50)
+//                            .padding(.horizontal)
+//                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .toolbar {
                         // Header
@@ -70,14 +70,12 @@ struct HomeView: View {
                                     .symbolEffect(.pulse)
                             }
                         }
-                        
                     }
                     .navigationDestination(isPresented: $showingSetting, destination: {
                         SettingView()
                     })
                     .navigationDestination(isPresented: $showingAddEdit, destination: {
                         AddEditView(selectedItem: $selectedItem)
-                        
                     })
                 } else {
                     Button("Enable Notifications") {
@@ -86,11 +84,9 @@ struct HomeView: View {
                     .buttonStyle(.bordered)
                 }
             }
-           
         }
         .onAppear {
             NotificationsManager.shared.fetchSetting(modelContext: modelContext)
-            
         }
         .onChange(of: scenePhase) { _, newValue in
             if newValue == .active {
@@ -104,28 +100,9 @@ struct HomeView: View {
             }
         }
     }
-    
-    //MARK: - Functions
-    func onChanged(value: DragGesture.Value, item: Item) {
-        if value.translation.width < 0 && isDragging {
-            withAnimation {
-                item.offset = value.translation.width
-            }
-        }
-    }
-    func onEnd(value: DragGesture.Value, item: Item) {
-        withAnimation {
-            if value.translation.width <= 50 {
-                item.offset = -130
-            } else {
-                item.offset = 0
-            }
-            
-        }
-    }
 }
 
-//MARK: - Extension
+// MARK: - Extension
 extension HomeView {
     private var expiryTabBar: some View {
         HStack(spacing: 0) {
@@ -149,78 +126,28 @@ extension HomeView {
     private var itemsList: some View {
         ForEach(filtered) { item in
             ZStack {
-                // Background (delete button)
-                Color.red.opacity(0.9)
-                    .cornerRadius(20)
-                Color.orange.opacity(0.9)
-                    .cornerRadius(20)
-                    .padding(.trailing, 65)
-                
-                HStack {
-                    Spacer()
-                    
-                    Button {
+                SwipeTammie(content: {
+                    ItemRowView(item: item)
+                }, leftActions: [],
+                            rightActions: [
+                    Action(title: "Edit", icon: "pencil", bgColor: .orange, fgColor: .white, cornerRadius: 10, action: {
                         selectedItem = item
                         showingAddEdit = true
-                        
-                    } label: {
-                        VStack {
-                            Image(systemName: "pencil")
-                                .bold()
-                                .foregroundColor(.white)
-                                .frame(width: 65)
-                            Text("Edit")
-                                .bold()
-                                .foregroundColor(.white)
-                        }
-                    }
-                    
-                    Button {
+                    }),
+                    Action(title: "Delete", icon: "trash", bgColor: .red, fgColor: .white, cornerRadius: 10, action: {
+                    if let index = items.firstIndex(where: { $0.id == item.id }) {
                         withAnimation {
-                            // Delete logics here
-                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                modelContext.delete(items[index])
-                                
-                                // Cancel existing notification for the item
-                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [item.id.uuidString])
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [item.id.uuidString])
-                                print("Deleted the item and Canceled the pending notification")
-                                
-                            }
+                            modelContext.delete(items[index])
                         }
-                    } label: {
-                        VStack {
-                            Image(systemName: "trash.fill")
-                                .bold()
-                                .foregroundColor(.white)
-                                .frame(width: 65)
-                            Text("Delete")
-                                .bold()
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-                
-                ItemRowView(item: item)
-                    .offset(x: item.offset)
-                    .gesture(DragGesture().updating($isDragging, body: { (value, state, _) in
-                        state = true
-                        onChanged(value: value, item: item)
-                    }).onEnded({ (value) in
-                        onEnd(value: value, item: item)
-                    }))
-                
+                        // Cancel existing notification for the item
+                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [item.id.uuidString])
+                        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [item.id.uuidString])
+                        print("Deleted the item and Canceled the pending notification")
+                    }})], frameHeight: 100)
             }
             .listRowSeparator(.hidden)
             .padding(.horizontal)
             .padding(.top, item == filtered.first ? 10 : 0)
-            .onDisappear {
-                withAnimation {
-                    if let index = items.firstIndex(where: { $0.id == item.id }) {
-                        items[index].offset = 0
-                    }
-                }
-            }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Look for your item")
     }

@@ -11,7 +11,7 @@ import UIKit
 import SwiftData
 
 struct AddEditView: View {
-    //MARK: - Property
+    // MARK: - Property
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) private var dismiss
     @Binding var selectedItem: Item?
@@ -50,7 +50,7 @@ struct AddEditView: View {
             ScrollView {
                 
                 VStack {
-                    //MARK: Item name
+                    // MARK: Item name
                     HStack {
                         Image(systemName: "pencil.and.scribble")
                         Text("Item :")
@@ -60,27 +60,27 @@ struct AddEditView: View {
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 5).fill(.gray.opacity(0.35)))
                     }
-                    //MARK: Item quantity
+                    // MARK: Item quantity
                     HStack {
                         Image(systemName: "cart.fill")
                         Text("Quantity :")
                             .padding(.trailing, 60)
                         Stepper("\(quantity)", value: $quantity, in: 1...100)
                     }
-                    //MARK: Purchased Date
+                    // MARK: Purchased Date
                     HStack {
                         Image(systemName: "calendar")
                         Text("Purchased Date :")
                         DatePicker("", selection: $purchasedDate, displayedComponents: .date)
                         
                     }
-                    //MARK: Expiry Date
+                    // MARK: Expiry Date
                     HStack {
                         Image(systemName: "calendar")
                         Text("Expiry Date :")
                         DatePicker("", selection: $expiryDate, displayedComponents: .date)
                     }
-                    //MARK: Item's photo
+                    // MARK: Item's photo
                     HStack {
                         Image(systemName: "photo")
                         Text("Item's photo :")
@@ -124,7 +124,7 @@ struct AddEditView: View {
                     }
                     Spacer()
                     
-                    //MARK: - Add/Edit Button
+                    // MARK: - Add/Edit Button
                     HStack {
                         // Add/ Edit Button
                         Button {
@@ -223,7 +223,7 @@ struct AddEditView: View {
         }
     }
     
-    //MARK: - PhotoSelection Sheet
+    // MARK: - PhotoSelection Sheet
     @ViewBuilder private func photoSelectionSheet() -> some View {
         VStack(alignment: .leading) {
     
@@ -259,7 +259,7 @@ struct AddEditView: View {
     }
 }
 
-//MARK: - Image Picker
+// MARK: - Image Picker
 struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) private var presentationMode
     var sourceType: UIImagePickerController.SourceType = .camera

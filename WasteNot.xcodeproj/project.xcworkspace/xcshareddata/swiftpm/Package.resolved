@@ -1,5 +1,5 @@
 {
-  "originHash" : "3b9752ff554d5fdc91a7c01c2322a5d851b0979c36f02eb55188d9ab9e3d7e77",
+  "originHash" : "b621e07201161109190994527b36d7e069507e58b268103041e81e29247cf41c",
   "pins" : [
     {
       "identity" : "swift-package-manager-google-mobile-ads",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "459949af1286c12487a6efd76f00f3e9d951c9ba",
         "version" : "2.5.0"
+      }
+    },
+    {
+      "identity" : "swipetammie",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bii-08/SwipeTammie.git",
+      "state" : {
+        "revision" : "b0727593840ce05cf3be84ec06f296a2cbd53f62",
+        "version" : "1.0.0"
       }
     }
   ],

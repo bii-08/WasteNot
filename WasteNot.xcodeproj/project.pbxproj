@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7871AB802C5BB9DC00F5EEE8 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */; };
 		788EF9CC2C44CE6D00C164D2 /* WasteNotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788EF9CB2C44CE6D00C164D2 /* WasteNotApp.swift */; };
 		788EF9D02C44CE6E00C164D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */; };
 		788EF9D32C44CE6E00C164D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788EF9D22C44CE6E00C164D2 /* Preview Assets.xcassets */; };
@@ -35,6 +36,9 @@
 		78E1123E2C49F03E00C970DA /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 78E1123D2C49F03E00C970DA /* GoogleMobileAds */; };
 		78E112422C4CD48100C970DA /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112412C4CD48100C970DA /* NotificationsManager.swift */; };
 		78E112442C4CE71500C970DA /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E112432C4CE71500C970DA /* Setting.swift */; };
+		78E980202C606620007C6292 /* SwipeTammie in Frameworks */ = {isa = PBXBuildFile; productRef = 78E9801F2C606620007C6292 /* SwipeTammie */; };
+		78E980242C60F41B007C6292 /* WasteNot_Cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 78E980232C60F41B007C6292 /* WasteNot_Cover.png */; };
+		78E980282C61B668007C6292 /* Screenshots.png in Resources */ = {isa = PBXBuildFile; fileRef = 78E980272C61B668007C6292 /* Screenshots.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		788EF9C82C44CE6D00C164D2 /* WasteNot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteNot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		788EF9CB2C44CE6D00C164D2 /* WasteNotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasteNotApp.swift; sourceTree = "<group>"; };
 		788EF9CF2C44CE6E00C164D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +97,9 @@
 		78E1123F2C49F17900C970DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		78E112412C4CD48100C970DA /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		78E112432C4CE71500C970DA /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		78E980212C6094F9007C6292 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		78E980232C60F41B007C6292 /* WasteNot_Cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WasteNot_Cover.png; sourceTree = "<group>"; };
+		78E980272C61B668007C6292 /* Screenshots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshots.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78E980202C606620007C6292 /* SwipeTammie in Frameworks */,
 				78E1123E2C49F03E00C970DA /* GoogleMobileAds in Frameworks */,
 				78DC2F882C56354600CC0C65 /* StoreKit.framework in Frameworks */,
 			);
@@ -119,6 +128,8 @@
 		788EF9BF2C44CE6D00C164D2 = {
 			isa = PBXGroup;
 			children = (
+				78E980212C6094F9007C6292 /* README.md */,
+				78E980222C60F3C8007C6292 /* Images */,
 				78BF693D2C53599900321DD6 /* WidgetExtensionExtension.entitlements */,
 				788EF9CA2C44CE6D00C164D2 /* WasteNot */,
 				78BF692C2C5353F000321DD6 /* WidgetExtension */,
@@ -150,6 +161,7 @@
 				78DC2F912C56459300CC0C65 /* TipsView.swift */,
 				78DC2F932C56465600CC0C65 /* TipsItemView.swift */,
 				78DC2F952C56577D00CC0C65 /* ThanksView.swift */,
+				7871AB7F2C5BB9DC00F5EEE8 /* Testing.swift */,
 				78E112392C49EF8700C970DA /* AdMod Ads */,
 				788EF9E72C44DC5700C164D2 /* Models */,
 				78E112402C4C91FC00C970DA /* NotificationsManager */,
@@ -224,6 +236,15 @@
 			path = NotificationsManager;
 			sourceTree = "<group>";
 		};
+		78E980222C60F3C8007C6292 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				78E980272C61B668007C6292 /* Screenshots.png */,
+				78E980232C60F41B007C6292 /* WasteNot_Cover.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -245,6 +266,7 @@
 			name = WasteNot;
 			packageProductDependencies = (
 				78E1123D2C49F03E00C970DA /* GoogleMobileAds */,
+				78E9801F2C606620007C6292 /* SwipeTammie */,
 			);
 			productName = WasteNot;
 			productReference = 788EF9C82C44CE6D00C164D2 /* WasteNot.app */;
@@ -296,6 +318,7 @@
 			mainGroup = 788EF9BF2C44CE6D00C164D2;
 			packageReferences = (
 				78E1123C2C49F03E00C970DA /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				78E9801E2C606620007C6292 /* XCRemoteSwiftPackageReference "SwipeTammie" */,
 			);
 			productRefGroup = 788EF9C92C44CE6D00C164D2 /* Products */;
 			projectDirPath = "";
@@ -312,7 +335,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78E980242C60F41B007C6292 /* WasteNot_Cover.png in Resources */,
 				788EF9D32C44CE6E00C164D2 /* Preview Assets.xcassets in Resources */,
+				78E980282C61B668007C6292 /* Screenshots.png in Resources */,
 				788EF9D02C44CE6E00C164D2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +384,7 @@
 				78DC2F8E2C563FE700CC0C65 /* Tipstore.swift in Sources */,
 				788EF9E42C44DB8600C164D2 /* AddEditView.swift in Sources */,
 				78DC2F962C56577D00CC0C65 /* ThanksView.swift in Sources */,
+				7871AB802C5BB9DC00F5EEE8 /* Testing.swift in Sources */,
 				78DC2F922C56459300CC0C65 /* TipsView.swift in Sources */,
 				78DC2F8B2C563F3600CC0C65 /* ProductsIdentifiers.swift in Sources */,
 				78E112442C4CE71500C970DA /* Setting.swift in Sources */,
@@ -679,6 +705,14 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		78E9801E2C606620007C6292 /* XCRemoteSwiftPackageReference "SwipeTammie" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bii-08/SwipeTammie.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -686,6 +720,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 78E1123C2C49F03E00C970DA /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		78E9801F2C606620007C6292 /* SwipeTammie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78E9801E2C606620007C6292 /* XCRemoteSwiftPackageReference "SwipeTammie" */;
+			productName = SwipeTammie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
