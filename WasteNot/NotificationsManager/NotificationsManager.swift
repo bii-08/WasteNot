@@ -36,7 +36,7 @@ class NotificationsManager: ObservableObject {
         components.minute = 30
         let defaultTime = Calendar.current.date(from: components)
         
-        self.setting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 0, currentTime: defaultTime!)
+        self.setting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 3, currentTime: defaultTime!)
     }
     
     // MARK: - Functions
@@ -134,7 +134,7 @@ func getCurrentSettings() async {
                 components.hour = 8
                 components.minute = 30
                 let defaultTime = Calendar.current.date(from: components)
-                let defaultSetting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 0, currentTime: defaultTime!)
+                let defaultSetting = Setting(notificationIsOn: true, hour: 8, minute: 30, numsOfDayBefore: 3, currentTime: defaultTime!)
                 self.setting = defaultSetting
                 modelContext.insert(defaultSetting)
             }

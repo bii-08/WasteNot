@@ -14,6 +14,7 @@ struct HomeView: View {
     // MARK: - Property
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) var modelContext
+    @AppStorage("Tipped") private var shouldRemoveAds: Bool = false
     @State private var showingSetting = false
     @State private var showingAddEdit = false
     @State private var searchText = ""
@@ -43,10 +44,12 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        BannerView()
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        if !shouldRemoveAds {
+                            BannerView()
+                                .frame(height: 50)
+                                .padding(.horizontal)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
                     }
                     .toolbar {
                         // Header

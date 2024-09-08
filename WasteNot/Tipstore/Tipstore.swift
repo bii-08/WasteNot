@@ -45,6 +45,7 @@ enum TipsAction: Equatable {
 @MainActor
 final class TipStore: ObservableObject {
     // MARK: Property
+    
     @Published private(set) var items = [Product]()
     @Published private(set) var action: TipsAction? {
         didSet {
@@ -137,6 +138,7 @@ private extension TipStore {
             let transaction = try checkVerified(verification)
             
             action = .successful
+            UserDefaults.standard.set(true, forKey: "Tipped")
             await transaction.finish()
         case .pending:
             print("The user needs to complete some action on their account before they can complete purchase")

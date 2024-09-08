@@ -66,7 +66,7 @@ struct SettingView: View {
                     
                     // MARK: Send notification before ... days
                     Section {
-                        Stepper("^[\(notificationManager.setting.numsOfDayBefore) day](inflect: true) before", value: $notificationManager.setting.numsOfDayBefore, in: 0...100)
+                        Stepper("^[\(notificationManager.setting.numsOfDayBefore) day](inflect: true) before", value: $notificationManager.setting.numsOfDayBefore, in: 1...100)
                             .onChange(of: notificationManager.setting.numsOfDayBefore) { _, _ in
                                 notificationManager.itemsToRechedule = items
                                 Task {
@@ -86,7 +86,7 @@ struct SettingView: View {
                             notificationManager.setting.notificationIsOn = true
                             notificationManager.setting.hour = 8
                             notificationManager.setting.minute = 30
-                            notificationManager.setting.numsOfDayBefore = 0
+                            notificationManager.setting.numsOfDayBefore = 3
                             var components = DateComponents()
                             components.hour = 8
                             components.minute = 30

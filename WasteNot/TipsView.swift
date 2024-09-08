@@ -30,6 +30,8 @@ struct TipsView: View {
             Text("If you'd like to support us, we’d really appreciate a tip. It helps us keep the app awesome and add more cool features.\n Any tips can remove Ads forever!")
                 .font(.system(.body, design: .rounded))
                 .multilineTextAlignment(.center)
+                .lineLimit(5)
+                .minimumScaleFactor(0.5)
                 .padding(.bottom, 16)
             
             ForEach(store.items) { item in

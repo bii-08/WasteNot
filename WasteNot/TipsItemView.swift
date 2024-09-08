@@ -19,8 +19,12 @@ struct TipsItemView: View {
                    spacing: 3) {
                 Text(item?.displayName ?? "-")
                     .font(.system(.title3, design: .rounded).bold())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 Text(item?.description ?? "-")
                     .font(.system(.callout, design: .rounded).weight(.regular))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.5)
             }
             
             Spacer()
